@@ -1,0 +1,549 @@
+Ejercicios Shell Script linux
+
+1. Escribe un script que calcule la media aritmética de dos números introducidos por
+teclado.
+
+>pico ej01.sh
+	#!/bin/bash
+
+	read -p "Dame el primer numero:" n1
+	read -p "Dame el segundo numero: " n2
+
+	media=$( echo "scale=2; ( $n1+$n2 )/2" | bc -l )
+
+	echo "La media de $n1 y $n2 es $media"
+
+>chmod u+x ej01.sh
+>./ej01.sh
+
+---------------------------------------------------------------------------------------------------
+
+2. Escribe un script que muestre la suma, la resta, la multiplicación y la división de
+dos números que se introducen por teclado.
+
+>pico ej02.sh
+	#!/bin/bash
+
+	read -p "Dame el primer numero:" n1
+	read -p "Dame el segundo numero: " n2
+
+	let suma=$n1+$n2
+	let resta=$n1-$n2
+	let multi=$n1\*$n2
+	divi=$( echo "scale=2; $n1/$n2" | bc -l )
+
+	echo "Suma: " $suma
+	echo "Resta: " $resta
+	echo "Multiplicacion: " $multi
+	echo "Division: " $divi
+
+>chmod u+x ej02.sh
+>./ej02.sh
+
+---------------------------------------------------------------------------------------------------
+
+3. Escribe un script que calcule el área de un cuadrado, a partir de su lado.
+
+>pico ej03.sh
+	#!/bin/bash
+
+	read -p "Dame el lado del cuadrado: " lado
+
+	let area=$lado\*$lado
+
+	echo "Area del cuadrado: " $area
+
+>chmod u+x ej03.sh
+>./ej03.sh
+
+---------------------------------------------------------------------------------------------------
+
+4. Escribe un script que calcule el área de un rectángulo, a partir de sus lados.
+
+>pico ej04.sh
+	#!/bin/bash
+
+	read -p "Dame el alto del cuadrado: " alto
+	read -p "Dame el ancho del cuadrado: " ancho
+
+	let area=$alto\*$ancho
+
+	echo "Area del rectangulo: " $area
+
+>chmod u+x ej04.sh
+>./ej04.sh
+
+---------------------------------------------------------------------------------------------------
+
+5. Escribe un script que calcule el área de un triángulo, en función de su base y su altura. Los datos
+(base y altura) se pasarán por parámetro al script.
+
+>pico ej05.sh
+	#!/bin/bash
+
+	read -p "Dame el alto del triangulo: " alto
+	read -p "Dame la base del triangulo: " ancho
+
+	area=$( echo "scale=2; ($alto*$ancho)/2" | bc -l )
+
+	echo "Area del triangulo: " $area
+
+>chmod u+x ej05.sh
+>./ej05.sh
+
+---------------------------------------------------------------------------------------------------
+
+6. Realiza un conversor de euros a dólares.
+
+>pico ej06.sh
+
+>chmod u+x ej06.sh
+>./ej06.sh
+
+7. Realiza un script que pida el precio de un producto y el porcentaje de IVA a
+aplicar, y que calcule el precio final.
+
+>pico ej07.sh
+
+>chmod u+x ej07.sh
+>./ej07.sh
+
+---------------------------------------------------------------------------------------------------
+
+8. Limpia la pantalla y pinta en pantalla tu nombre
+
+>pico ej08.sh
+
+>chmod u+x ej08.sh
+>./ej08.sh
+
+---------------------------------------------------------------------------------------------------
+
+9. Crea 2 ficheros. Añade una frase en cada uno de los ficheros. Añade al segundo fichero el contenido del primero.
+
+>pico ej09.sh
+
+>chmod u+x ej09.sh
+>./ej09.sh
+
+---------------------------------------------------------------------------------------------------
+
+10. Escribe un script que pida por teclado el nombre de un fichero de texto y que a
+continuación muestre el contenido de ese fichero.
+Antes de proceder a mostrar nada por pantalla, primero comprueba que el fichero exista y que además tengas permisos suficientes para leer su contenido.
+
+>pico ej10.sh
+
+>chmod u+x ej10.sh
+>./ej10.sh
+
+---------------------------------------------------------------------------------------------------
+
+11. Escribe un script que muestre el espacio libre de cada partición.
+
+>pico ej11.sh
+
+>chmod u+x ej11.sh
+>./ej11.sh
+
+---------------------------------------------------------------------------------------------------
+
+12. Escribe un script que pida por teclado el nombre de un fichero de texto y que a
+continuación muestre el contenido del fichero y después todos los datos del
+mismo (permisos, tamaño, etc.)
+
+>pico ej12.sh
+
+>chmod u+x ej12.sh
+>./ej12.sh
+
+---------------------------------------------------------------------------------------------------
+
+13. Escribe un script que pida 5 nombres de fruta y que luego los muestre en el
+orden inverso.
+Después almacene esos nombres en un array y los vuelva a mostrar por pantalla.
+
+>pico ej13.sh
+
+>chmod u+x ej13.sh
+>./ej13.sh
+
+---------------------------------------------------------------------------------------------------
+
+14. Escribe un script que muestre por pantalla los números del 20 al 40
+
+>pico ej14.sh
+
+>chmod u+x ej14.sh
+>./ej14.sh
+
+---------------------------------------------------------------------------------------------------
+
+15. Escribe un script que muestre por pantalla los números del 10 al 20 pero no muestre ni el 13 ni el 15.
+
+>pico ej15.sh
+
+>chmod u+x ej15.sh
+>./ej15.sh
+
+---------------------------------------------------------------------------------------------------
+
+16. Escribe un script que muestre los números del 1 al 30 pero saltando de 3 en tres
+
+>pico ej16.sh
+
+>chmod u+x ej16.sh
+>./ej16.sh
+
+---------------------------------------------------------------------------------------------------
+
+17. Escribe un script que reciba como parámetros 2 números (enteros) y calcule su suma
+
+>pico ej17.sh
+
+>chmod u+x ej17.sh
+>./ej17.sh
+
+---------------------------------------------------------------------------------------------------
+
+18. Crear un script llamado cuenta_atras.sh que nos pida dos números cualesquiera, deberá mostrar por pantalla todos los números entre el mayor de los dos introducidos y el menor. (Así si introducimos 20 1 nos mostrará los números del 20 al 1, si introducimos 56 89 nos mostrará los números del 89 al 56). 
+
+>pico ej18.sh
+
+>chmod u+x ej18.sh
+>./ej18.sh
+
+---------------------------------------------------------------------------------------------------
+
+19. Crea un script que calcule el doble de un número pasado como parámetro a ese script
+
+>pico ej19.sh
+
+>chmod u+x ej19.sh
+>./ej19.sh
+
+---------------------------------------------------------------------------------------------------
+
+20. Programa que te salude (buenos días, buenas tardes o buenas noches) en función de la hora del sistema.
+Pista: date +%H nos dice qué hora es
+
+>pico ej20.sh
+
+>chmod u+x ej20.sh
+>./ej20.sh
+
+---------------------------------------------------------------------------------------------------
+
+21. Script que admita por parámetros el nombre y 2 apellidos y:
+muestre por pantalla el nombre y los 2 apellidos. 
+guarde en un fichero de texto llamado datos.txt esa información.
+El script mostrará el error si no se pasa al menos nombre y un apellido.
+Si no se pasa ningún parámetro, el script pedirá por teclado los 3 datos (nombre, apellido1 y apellido2).
+
+>pico ej21.sh
+
+>chmod u+x ej21.sh
+>./ej21.sh
+
+---------------------------------------------------------------------------------------------------
+
+22. Script que pida tu edad y nos diga si es mayor de edad o menor.
+
+>pico ej22.sh
+
+>chmod u+x ej22.sh
+>./ej22.sh
+
+---------------------------------------------------------------------------------------------------
+
+23. Script que muestre un menú con 3 opciones y permita seleccionar una de esas 3 opciones.
+Si se selecciona la opción 1: Se mostrará los números del 1 al 10
+Si se selecciona la opción 2: Se mostrarán los números del 1 al 40 saltando de 4 en 4
+Si se selecciona la opción 3: Se mostrarán los números del 1 al 10 (excepto 3, 5, 6)
+
+>pico ej23.sh
+
+>chmod u+x ej23.sh
+>./ej23.sh
+
+---------------------------------------------------------------------------------------------------
+
+24. Realizar un script en linux que pida introducir la ruta de un directorio por teclado (Hay que validar que la variable introducida sea un directorio) nos diga cuantos archivos y cuantos directorios hay dentro de ese directorio (usando bucle for).
+
+>pico ej24.sh
+
+>chmod u+x ej24.sh
+>./ej24.sh
+
+---------------------------------------------------------------------------------------------------
+
+25. Realizar un script en linux que permita convertir de grados a radianes y viceversa. El programa pedirá por teclado el tipo de conversión y el valor, y devolverá el resultado por pantalla, además de guardar el resultado en un fichero llamado conversion.txt
+
+>pico ej25.sh
+
+>chmod u+x ej25.sh
+>./ej25.sh
+
+---------------------------------------------------------------------------------------------------
+
+26. Realiza un script que partiendo de tu edad y te indique si eres un bebé, un niño/a, un adolescente, un adulto o un anciano/a.
+Si al script no se le pasan ningun parametro, pedirá la edad por teclado.
+Si al script se le pasa un solo parámetro, lo usará como edad.
+Si al script se le pasan más de un parámetro mostrará un error.
+
+>pico ej26.sh
+
+>chmod u+x ej26.sh
+>./ej26.sh
+
+---------------------------------------------------------------------------------------------------
+
+27. Crea un script automatizador de git
+El script realizará las siguientes tareas
+	git add .
+	git commit -m "<PrimerParametro>"
+	si el <SegundoParametro> está presente
+git push origin master
+
+El script tendrá 2 parámetros:
+	PrimerParametro que será el mensaje a asociar al commit
+	SegundoParametro [push] que indicará si deseas hacer el push al repositorio remoto
+
+>pico ej27.sh
+
+>chmod u+x ej27.sh
+>./ej27.sh
+
+---------------------------------------------------------------------------------------------------
+
+28. Crea un script para ayudar a apagar el equipo
+El programa mostrará un menú al usuario
+1.-Apagar equipo ahora
+2.-Reiniciar equipo ahora
+3.-Asignar hora de apagado del equipo
+4.-Apagar equipo a los xx minutos
+5.-Salir
+
+Si se selecciona la opción 1, se apagará el equipo inmediatamente.
+Si se selecciona la opción 2, se reiniciará el equipo inmediatamente
+Si se selecciona la opción 3, se pedirá por teclado una hora y se apagará el equipo a esa hora
+Si se selecciona la opción 4, se pedirá unos minutos por teclado y se apagará el equipo transcurridos esos minutos.
+La opción 5 terminará el script.
+Cualquier otra opción mostrará un error
+
+>pico ej28.sh
+
+>chmod u+x ej28.sh
+>./ej28.sh
+
+---------------------------------------------------------------------------------------------------
+
+29. Crea un programa que nada más empezar ofrezca un menú con 4 opciones.
+Si el usuario pulsa la opción número 1, el programa borrará la pantalla y mostrará los números pares del 1 al 20.
+Si el usuario pulsa la opción 2 pedirá por teclado un número positivo menor que 100 (puede ser con decimales) y mostrará ese número elevado al cuadrado. 
+Si el usuario inserta un número negativo o mayor que 100 se mostrará un error.
+Si el usuario pulsa la opción 3, el programa pedirá por teclado el nombre de un fichero. 
+Si el nombre del fichero ya existe el programa no hará nada. 
+Si el nombre del fichero no existiese creará un nuevo fichero con el contenido "HOLA" y le dará permiso totales de usuario, grupo y otros.
+Si el usuario pulsa la opción 4: Se borrará la pantalla y mostrará la fecha de hoy con el formato DIA/MES/AÑO
+
+
+NOTA: será obligatorio usar funciones para que el ejercicio esté correcto
+
+>pico ej29.sh
+
+>chmod u+x ej29.sh
+>./ej29.sh
+
+---------------------------------------------------------------------------------------------------
+
+30. Programa que recorra con un bucle for todos los fichero del directorio en el que ejecutas en script y nos indique si existe un fichero llamado examen.txt, y sus permisos (lectura, escritura o ejecución).
+Ejemplo de salida:
+El fichero examen.txt si existe
+  y tiene permiso de lectura
+  y tiene permiso de escritura
+  y no tiene permiso de ejecución
+
+>pico ej30.sh
+
+>chmod u+x ej30.sh
+>./ej30.sh
+
+---------------------------------------------------------------------------------------------------
+
+31. Crea un programa que convierta de galones a litros y viceversa.
+El programa admitirá que se le pasen 2 parámetros
+El primer parámetro servirá para indicar si se quiere convertir de litros a galones (-lg) o de galones a litros (-gl)
+El segundo parámetro será el valor que se desea convertir
+
+Datos para poder hacer el ejercicio:
+1 litro son 0,264172 galones
+1 galón son 3,78541 litros
+
+Ejemplo de salida:
+$ ./eje4.sh -lg 25
+	25 litros son 6.604300 galones
+	$ ./eje4.sh -gl 35
+	35 galones son 132.48935 litros
+
+>pico ej31.sh
+
+>chmod u+x ej31.sh
+>./ej31.sh
+
+---------------------------------------------------------------------------------------------------
+
+32. Programa que pida por pantalla el nº de hijos de una familia y devuelva la cantidad de ayuda (en euros) que va a percibir esa familia.
+Si la familia tiene 0 hijos no recibe ninguna ayuda
+Si la familia tiene 1 hijo recibe 100 euros
+Si la familia tiene 2 hijos recibe 300 euros
+Si la familia tiene 3 o más hijos recibe 800 euros
+En caso de introducir un valor negativo de hijos o un número de hijos superior a 200 el sistema devolverá un error.
+Da permisos adecuados y ejecuta el programa (escribe los comandos necesarios)
+
+>pico ej32.sh
+
+>chmod u+x ej32.sh
+>./ej32.sh
+
+---------------------------------------------------------------------------------------------------
+
+33. Programa que convierta temperatura dada en grados Fahrenheit (ºF) a grados centígrados (ºC)
+
+La fórmula es: ºC = ºF-321.8
+El programa pedirá por consola la temperatura en grados Fahrenheit y devolverá el valor en grados centígrados.
+NOTA: Recuerda que para hacer cálculos con decimales tendrás que usar 
+$( echo "scale=4; <operacion_a_calcular>" | bc -l ) 
+
+>pico ej33.sh
+
+>chmod u+x ej33.sh
+>./ej33.sh
+
+---------------------------------------------------------------------------------------------------
+
+34. Programa que pida por pantalla 2 números y determine cual es el mayor.
+
+>pico ej34.sh
+
+>chmod u+x ej34.sh
+>./ej34.sh
+
+---------------------------------------------------------------------------------------------------
+
+35. Programa al que se le pueda pasar como parámetros 2 números y determine cuál de ellos es el mayor.
+
+>pico ej35.sh
+
+>chmod u+x ej35.sh
+>./ej35.sh
+
+---------------------------------------------------------------------------------------------------
+
+36. Programa al que se le puedan pasar como parámetro múltiples valores numéricos y determine cuál de ellos es el menor.
+
+>pico ej36.sh
+
+>chmod u+x ej36.sh
+>./ej36.sh
+
+---------------------------------------------------------------------------------------------------
+
+37. Muestra un menú con 5 opciones:
+la primera opción mostrará la fecha actual.
+la segunda opción mostrará un calendario (con el mes actual).
+la tercera opción creará un fichechero llamado info.txt con: tu nombre y la fecha actual.
+la cuarta opción borrará el fichero info.txt
+la quinta opción nos dirá si el fichero info.txt existe
+
+Usa funciones para que el código sea más limpio.
+
+>pico ej037.sh
+
+>chmod u+x ej37.sh
+>./ej37.sh
+
+---------------------------------------------------------------------------------------------------
+
+38. Escribe un script, que realice lo siguiente:
+
+Pide al usuario que introduzca su contraseña: Introduzca password
+Pídele que repita la contraseña (Repita de nuevo su password)
+Si la contraseña no coincide con la contraseña inicial, presenta el siguiente mensaje: El password no coincide, intentelo de nuevo
+Repite los pasos 2 y 3 hasta que la contraseña coincida con la contraseña inicial
+
+>pico ej38.sh
+
+>chmod u+x ej38.sh
+>./ej38.sh
+
+---------------------------------------------------------------------------------------------------
+
+39. Quieres que el sistema te avise cuando un usuario (nombre de usuario) pasado como parámetro se conecte al sistema.
+
+PISTA: usa who y grep
+
+El sistema estará comprobando cada segundo si el usuario se conecta. En cuanto el usuario se conecte mostrará un mensaje por pantalla y el programa terminará.
+
+>pico ej39.sh
+
+>chmod u+x ej39.sh
+>./ej39.sh
+
+---------------------------------------------------------------------------------------------------
+
+40. Script que pide números y muestra el doble de dichos números.
+El script continúa ejecutándose mientras que no se introduzca 0.
+
+>pico ej40.sh
+
+>chmod u+x ej40.sh
+>./ej40.sh
+
+---------------------------------------------------------------------------------------------------
+
+41.  Mostrar por pantalla números del 1 al 20
+
+>pico ej41.sh
+
+>chmod u+x ej41.sh
+>./ej41.sh
+
+---------------------------------------------------------------------------------------------------
+
+42. Pedir por pantalla un nombre de persona, si no es nulo mostrar el nombre insertado por teclado; en caso contrario, si este es nulo, mostrar el nombre del sistema whoami
+
+>pico ej42.sh
+
+>chmod u+x ej42.sh
+>./ej42.sh
+
+---------------------------------------------------------------------------------------------------
+
+43. Chekear si un directorio existe
+
+>pico ej43.sh
+
+>chmod u+x ej43.sh
+>./ej43.sh
+
+---------------------------------------------------------------------------------------------------
+
+44. Comparar 2 números. Indica si son iguales o distintos
+
+>pico ej44.sh
+
+>chmod u+x ej44.sh
+>./ej44.sh
+
+---------------------------------------------------------------------------------------------------
+
+45. Usando una estructura Case, preguntar (por teclado) por el lenguaje de programación preferido
+y mostrar una frase en función del lenguaje elegido
+
+>pico ej45.sh
+
+>chmod u+x ej45.sh
+>./ej45.sh
+
+---------------------------------------------------------------------------------------------------

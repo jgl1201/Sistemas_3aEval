@@ -1,0 +1,196 @@
+Programas que puedo crear para el sistema operativo
+------------------------------------------------------------
+>mkdir ShellScript
+>cd ShellScript
+>pico ejercicio01.sh
+	#!/bin/bash
+	echo "Hola mundo"
+
+	ctrl + o; enter, ctrl + x
+>cat ejercicio01.sh
+>ls -l ejercicio01.sh
+>chmod u+x ejercicio01.sh
+>./ejercicio01.sh
+------------------------------------------------------------
+>vi ejercicio02.sh
+	insert
+	#!/bin/bash
+	valor=2
+	echo "La variable vale $valor"
+	esc
+	:w enter
+	:q enter
+
+>chmod u+x ejercicio02.sh
+>./ejercicio02.sh
+------------------------------------------------------------
+>pico ejercicio03.sh
+	#!/bin/bash
+	echo "Today is date"
+	echo 'Today is date'
+	echo "Today is `date`"
+	
+	datos=`ps -A | grep zsh`
+	echo "$datos"
+
+	ctrl + o; enter, ctrl + x
+>chmod u+x ejercicio03.sh
+>./ejercicio03.sh
+------------------------------------------------------------
+>sudo apt install bc
+>pico ejercicio04.sh
+	#!/bin/bash
+	num=5
+
+	let suma=num+2
+	resta=$(( num-2 ))
+	multi=$(expr $num \* 2)
+	mitad=$[ $num / 2 ]
+	mitadDecimal=$( echo "scale=2; $num/2" | bc -l )
+
+	echo "$suma"
+	echo "$resta"
+	echo "$multi"
+	echo "$mitadDecimal"
+	echo "$mitad"
+
+	ctrl + o; enter, ctrl + x
+>chmod u+x ejercicio04.sh
+>./ejercicio04.sh
+------------------------------------------------------------
+>pico ejercicio05.sh
+	#!/bin/bash
+	echo "Dime como te llamas"
+	read nombre
+	echo "Que tal estas $nombre"
+	echo
+	read -p "Dime un numero:" numero
+	let doble=numero\*2
+	echo "El doble del numero es: $doble"
+
+	ctrl + o; enter, ctrl + x
+>chmod u+x ejercicio05.sh
+>./ejercicio05.sh
+------------------------------------------------------------
+>pico ejercicio06.sh
+	#!/bin/bash
+	read -p "Dame un numero: " valor
+	# gt >; ge >=; lt <; le <=; ne <>; eq =
+	if [ $valor -ge 0 ]
+	then
+	        echo "El numero es positivo"
+	else
+	        echo "El numero es negativo"
+	fi
+
+	ctrl + o; enter, ctrl + x
+>chmod u+x ejercicio06.sh
+>./ejercicio06.sh
+------------------------------------------------------------
+>pico ejercicio07.sh
+	#!/bin/bash
+	echo "1 - opcion 1"
+	echo "2 - opcion 2"
+	read -n 1 -p "selecciona una opcion: " opcion
+	case $opcion in
+		1)
+			echo "seleccion 1"
+		;;
+		2) 
+			echo "seleccion 2"
+		;;
+		*)
+			echo "seleccion otra opcion"
+		;;
+	esac
+
+	ctrl + o; enter, ctrl + x
+>chmod u+x ejercicio07.sh
+>./ejercicio07.sh
+------------------------------------------------------------
+>pico ejercicio08.sh
+	#!/bin/bash
+	miFuncion() {
+		clear
+		echo "hola"
+	}
+	miFuncion
+
+	ctrl + o; enter, ctrl + x
+>chmod u+x ejercicio08.sh
+>./ejercicio08.sh
+------------------------------------------------------------
+>pico ejercicio09.sh
+	#!/bin/bash
+	echo "El nombre del fichero es: $0"
+	echo "El primer argumento es: $1"
+	echo "El segundo argumento es: $2"
+	echo "La cantidad de argumentos pasados es: $#"
+	echo "Todos los argumentos: $*"
+	exit 4
+
+	ctrl + o; enter, ctrl + x
+>chmod u+x ejercicio09.sh
+>./ejercicio09.sh 9 casa
+------------------------------------------------------------
+>pico ejercicio10.sh
+	#!/bin/bash
+	miFuncion() {
+		echo "El numero de parametros es $#"
+		echo "El primer argumento es: $1"
+		echo "El segundo argumento es: $2"
+		echo "El segundo argumento es: $3"
+		echo "Todos los argumentos: $*"		
+	}
+	miFuncion "hola" "que tal" 77
+
+	ctrl + o; enter, ctrl + x
+>chmod u+x ejercicio10.sh
+>./ejercicio10.sh
+------------------------------------------------------------
+>pico ejercicio11.sh
+	#!/bin/bash
+	i=0
+
+	echo "Bucle WHILE----------"
+	while [ $i -lt 10 ]
+	do
+		echo "i vale $i"
+		let i=$i+1
+	done
+
+	i=10
+	limite=5
+
+	echo "Bucle UNTIL----------"
+	until [ $limite -gt $i ]
+	do
+		echo "i vale $i"
+		let i=$i-1
+	done
+
+	ctrl + o; enter, ctrl + x
+>chmod u+x ejercicio11.sh
+>./ejercicio11.sh
+------------------------------------------------------------
+>pico ejercicio12.sh
+	#!/bin/bash
+	for num in {1..5}
+	do
+		echo "Numero vale $num"
+	done
+
+	for valor in {1..10..2}
+	do
+		echo "Valor vale $valor"
+	done
+
+	for (( i=2; i<=10; i=i+2 ))
+	do
+		echo "i vale $i"
+	done
+
+	ctrl + o; enter, ctrl + x
+>chmod u+x ejercicio12.sh
+>./ejercicio12.sh
+------------------------------------------------------------
