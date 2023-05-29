@@ -96,14 +96,41 @@ dos números que se introducen por teclado.
 6. Realiza un conversor de euros a dólares.
 
 >pico ej06.sh
+	#!/bin/bash
+
+	read -p "1: euro -> dolar; 2: dolar -> euro" opcion
+
+	if [ $opcion -eq 1 ]; then
+		read -p "Euros: " euros
+		multi=$( echo "sclae = 2; $euros*1.07" | bc -l)
+		echo "$euros euros son $multi dollares"
+	elif [ $opcion -eq 2]; then
+		read -p "Dolares: " dolar
+		divi=$( echo "scale = 2; $dolar/1.07" | bc -l)
+		echo "$dolar dolares son $divi euros"
+	else
+		echo "Opcion no valida"
+	fi
 
 >chmod u+x ej06.sh
 >./ej06.sh
+
+---------------------------------------------------------------------------------------------------
 
 7. Realiza un script que pida el precio de un producto y el porcentaje de IVA a
 aplicar, y que calcule el precio final.
 
 >pico ej07.sh
+	#!/bin/bash
+
+	read -p "Precio del pruducto: " precio
+	read -p "IVA que se aplica: " iva
+
+	porcentaje=$( echo "scale = 2; $iva/100" | bc -l)
+
+	pfinal=$( echo "scale = 2; $precio*(1+$porcentaje)" | bc -l)
+
+	echo "El precio final es $pfinal"
 
 >chmod u+x ej07.sh
 >./ej07.sh
@@ -113,6 +140,10 @@ aplicar, y que calcule el precio final.
 8. Limpia la pantalla y pinta en pantalla tu nombre
 
 >pico ej08.sh
+	#!/bin/bash
+
+	clear
+	echo "Me llamo Jorge"
 
 >chmod u+x ej08.sh
 >./ej08.sh
@@ -122,6 +153,11 @@ aplicar, y que calcule el precio final.
 9. Crea 2 ficheros. Añade una frase en cada uno de los ficheros. Añade al segundo fichero el contenido del primero.
 
 >pico ej09.sh
+	#!/bin/bash
+
+	echo "Buenos días mundo" > fichero01.txt
+	echo "Cómo estás" > fichero02.txt
+	cat fichero02.txt >> fichero01.txt
 
 >chmod u+x ej09.sh
 >./ej09.sh
@@ -130,9 +166,26 @@ aplicar, y que calcule el precio final.
 
 10. Escribe un script que pida por teclado el nombre de un fichero de texto y que a
 continuación muestre el contenido de ese fichero.
-Antes de proceder a mostrar nada por pantalla, primero comprueba que el fichero exista y que además tengas permisos suficientes para leer su contenido.
+Antes de proceder a mostrar nada por pantalla, primero comprueba que el fichero exista y que además
+tengas permisos suficientes para leer su contenido.
 
 >pico ej10.sh
+	#!/bin/bash
+
+	read -p "Nombre del fichero: " fichero
+
+	# -f para comprobar existencia del archivo
+	if [ ! -f "$fichero" ]; then
+		echo "El fichero no existe"
+	else
+		# -r para comprobar permisos de read
+		if [ ! -r "$fichero" ]; then
+			chmod +r "$fichero"
+			echo "Permisos de lectura añadidos"
+		fi
+		echo "Contenido del archivo: "
+		cat "$fichero"
+	fi
 
 >chmod u+x ej10.sh
 >./ej10.sh
@@ -142,6 +195,25 @@ Antes de proceder a mostrar nada por pantalla, primero comprueba que el fichero 
 11. Escribe un script que muestre el espacio libre de cada partición.
 
 >pico ej11.sh
+	#!/bin/bash
+
+	# Obtener información de las particiones con el comando "df"
+	particiones=$(df -h)
+
+	# Imprimir encabezado
+	echo "Partición   Espacio Libre"
+
+	# Recorrer las líneas de salida del comando "df"
+	while IFS= read -r linea; do
+		# Extraer el nombre de la partición y el espacio libre
+		particion=$(echo "$linea" | awk '{print $1}')
+ 		espacio_libre=$(echo "$linea" | awk '{print $4}')
+
+		# Ignorar la primera línea (encabezado) y las particiones temporales (por ejemplo, "tmpfs")
+		if [[ "$particion" != "Filesystem" && "$particion" != "tmpfs" ]]; then
+			echo "$particion   $espacio_libre"
+		fi
+	done <<< "$particiones"
 
 >chmod u+x ej11.sh
 >./ej11.sh
@@ -153,7 +225,25 @@ continuación muestre el contenido del fichero y después todos los datos del
 mismo (permisos, tamaño, etc.)
 
 >pico ej12.sh
+	#!/bin/bash
 
+	read -p "Nombre del archivo a leer: " fichero
+
+	if [ ! -f "$fichero" ]; then
+		echo "El fichero no existe"
+	else
+		if [ ! -r "$fichero" ]; then
+			chmod +r "$fichero"
+			echo "Permisos de lectura añadidos"
+		fi
+	echo "Contenido del fichero: "
+	cat "$fichero"
+	echo "----------"
+	# -c "A%" para que sea entendible
+	permisos=$(stat -c "%A" "$fichero")
+  	echo "Permisos del archivo $fichero: $permisos"
+	fi
+	
 >chmod u+x ej12.sh
 >./ej12.sh
 
@@ -164,6 +254,25 @@ orden inverso.
 Después almacene esos nombres en un array y los vuelva a mostrar por pantalla.
 
 >pico ej13.sh
+	#!/bin/bash
+
+	frutas=()  # Array para almacenar las frutas ingresadas
+	
+	# Pedir 5 nombres de frutas al usuario
+	for ((i=0; i<5; i++)); do
+	read -p "Ingresa el nombre de la fruta $((i+1)): " fruta
+	frutas+=("$fruta")  # Agregar la fruta al array
+	done
+
+	echo "Frutas ingresadas en orden inverso:"
+	for ((i=4; i>=0; i--)); do
+		echo "${frutas[i]}"
+	done
+
+	echo "Frutas almacenadas en el array:"
+	for fruta in "${frutas[@]}"; do
+		echo "$fruta"
+	done
 
 >chmod u+x ej13.sh
 >./ej13.sh
@@ -173,6 +282,11 @@ Después almacene esos nombres en un array y los vuelva a mostrar por pantalla.
 14. Escribe un script que muestre por pantalla los números del 20 al 40
 
 >pico ej14.sh
+	#!/bin/bash
+
+	for numero in {20..40}; do
+		echo "$numero"
+	done
 
 >chmod u+x ej14.sh
 >./ej14.sh
@@ -182,6 +296,13 @@ Después almacene esos nombres en un array y los vuelva a mostrar por pantalla.
 15. Escribe un script que muestre por pantalla los números del 10 al 20 pero no muestre ni el 13 ni el 15.
 
 >pico ej15.sh
+	#!/bin/bash
+
+	for numero in {10..20}; do
+		if [[ $numero != 13 && $numero != 15 ]]; then
+			echo "$numero"
+		fi
+	done
 
 >chmod u+x ej15.sh
 >./ej15.sh
@@ -191,6 +312,11 @@ Después almacene esos nombres en un array y los vuelva a mostrar por pantalla.
 16. Escribe un script que muestre los números del 1 al 30 pero saltando de 3 en tres
 
 >pico ej16.sh
+	#!/bin/bash
+
+	for numero in {10..30..3}; do
+		echo "$numero"
+	done
 
 >chmod u+x ej16.sh
 >./ej16.sh
@@ -200,15 +326,56 @@ Después almacene esos nombres en un array y los vuelva a mostrar por pantalla.
 17. Escribe un script que reciba como parámetros 2 números (enteros) y calcule su suma
 
 >pico ej17.sh
+	#!/bin/bash
+
+	# comprobar que haya 2 parametros
+	if [ $# -ne 2 ]; then
+		echo "Error: Se requieren exactamente 2 números como parámetros."
+  		exit 1
+	fi
+
+	numero1=$1
+	numero2=$2
+
+	if ! [[ $numero1 =~ ^[0-9]+$ ]] || ! [[ $numero2 =~ ^[0-9]+$ ]]; then
+		echo "Error. Los parámetros deben ser enteros"
+		exit 1
+	fi
+
+	suma=$((numero1 + numero2))
+	echo "La suma de $numero1 y $numero2 es $suma"
 
 >chmod u+x ej17.sh
->./ej17.sh
+>./ej17.sh 9 8
 
 ---------------------------------------------------------------------------------------------------
 
-18. Crear un script llamado cuenta_atras.sh que nos pida dos números cualesquiera, deberá mostrar por pantalla todos los números entre el mayor de los dos introducidos y el menor. (Así si introducimos 20 1 nos mostrará los números del 20 al 1, si introducimos 56 89 nos mostrará los números del 89 al 56). 
+18. Crear un script llamado cuenta_atras.sh que nos pida dos números cualesquiera, deberá mostrar por
+pantalla todos los números entre el mayor de los dos introducidos y el menor. (Así si introducimos 20
+1 nos mostrará los números del 20 al 1, si introducimos 56 89 nos mostrará los números del 89 al 56). 
 
 >pico ej18.sh
+	#!/bin/bash
+
+	read -p "Numero 1: " numero1
+	read -p "Numero 2: " numero2
+
+	if ! [[ $numero1 =~ ^[0-9]+$ ]] || ! [[ $numero2 =~ ^[0-9]+$ ]]; then
+		echo "Error: Los parámetros deben ser números enteros."
+		exit 1
+	fi
+
+	if [ "$numero1" -gt "$numero2" ]; then
+		mayor=$numero1
+		menor=$numero2
+	else
+		mayor=$numero2
+		menor=$numero1
+	fi
+	
+	for ((i=mayor; i>=menor; i--)); do
+		echo "$i"
+	done
 
 >chmod u+x ej18.sh
 >./ej18.sh
@@ -218,16 +385,33 @@ Después almacene esos nombres en un array y los vuelva a mostrar por pantalla.
 19. Crea un script que calcule el doble de un número pasado como parámetro a ese script
 
 >pico ej19.sh
+	#!/bin/bash
+
+	for parametro in "$@"; do
+		doble=$(expr $parametro \* 2)
+		echo "El doble de $parametro es $doble"
+	done
 
 >chmod u+x ej19.sh
->./ej19.sh
+>./ej19.sh 2 12 98
 
 ---------------------------------------------------------------------------------------------------
 
-20. Programa que te salude (buenos días, buenas tardes o buenas noches) en función de la hora del sistema.
-Pista: date +%H nos dice qué hora es
+20. Programa que te salude (buenos días, buenas tardes o buenas noches) en función de la hora del
+sistema. Pista: date +%H nos dice qué hora es
 
 >pico ej20.sh
+	#!/bin/bash
+
+	hora=$(date +%H)
+
+	if (( hora >= 0 && hora < 12 )); then
+		echo "Buenos días"
+	elif (( hora >= 12 && hora < 18 )); then
+		echo "Buenas tardes"
+	else
+		echo "Buenas noches"
+	fi
 
 >chmod u+x ej20.sh
 >./ej20.sh
