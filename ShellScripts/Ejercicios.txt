@@ -419,21 +419,44 @@ sistema. Pista: date +%H nos dice qué hora es
 ---------------------------------------------------------------------------------------------------
 
 21. Script que admita por parámetros el nombre y 2 apellidos y:
-muestre por pantalla el nombre y los 2 apellidos. 
-guarde en un fichero de texto llamado datos.txt esa información.
-El script mostrará el error si no se pasa al menos nombre y un apellido.
-Si no se pasa ningún parámetro, el script pedirá por teclado los 3 datos (nombre, apellido1 y apellido2).
+muestre por pantalla el nombre y los 2 apellidos. Guarde en un fichero de texto llamado datos.txt
+esa información. El script mostrará el error si no se pasa al menos nombre y un apellido. Si no se
+pasa ningún parámetro, el script pedirá por teclado los 3 datos (nombre, apellido1 y apellido2).
 
 >pico ej21.sh
+	#!/bin/bash
 
+	# comprobar que haya 2 parametros
+	if [ $# -ne 3 ]; then
+		echo "Error: Se requieren nombre y 2 apellidos"
+  		exit 1
+	fi
+
+	# Nombre del archivo de salida
+	archivo_salida="parametros.txt"
+
+	# Almacenar los parámetros en el archivo
+	echo "$@" > "$archivo_salida"
+
+	# Mostrar el contenido del archivo
+	cat "$archivo_salida"
+	
 >chmod u+x ej21.sh
->./ej21.sh
+>./ej21.sh Jorge Garcia Lopez
 
 ---------------------------------------------------------------------------------------------------
 
 22. Script que pida tu edad y nos diga si es mayor de edad o menor.
 
 >pico ej22.sh
+	#!/bin/bash
+	read -p "Cual es tu edad?: " edad
+
+	if [ $edad -ge 18 ]; then
+		echo "Eres mayor de edad"
+	else
+		echo "Eres menor de edad"
+	fi
 
 >chmod u+x ej22.sh
 >./ej22.sh
@@ -446,24 +469,96 @@ Si se selecciona la opción 2: Se mostrarán los números del 1 al 40 saltando d
 Si se selecciona la opción 3: Se mostrarán los números del 1 al 10 (excepto 3, 5, 6)
 
 >pico ej23.sh
+	#!/bin/bash
+	
+	read -p "Escoge una opcion del 1 al 3: " opcion
+
+	case $opcion in
+		1)
+			for num in {1..10}; do
+				echo "$num"
+			done
+		;;
+		2)
+			for num in {1..40..4}; do
+				echo "$num"
+			done
+		;;
+		3)
+			for num in {1..10}; do
+				if [[ $num != 3 && $num != 5 && $num != 6 ]]; then
+					echo "$num"
+				fi
+			done
+		;;
+		*)
+			echo "Opcion no valida"
+		;;
+	esac
 
 >chmod u+x ej23.sh
 >./ej23.sh
 
 ---------------------------------------------------------------------------------------------------
 
-24. Realizar un script en linux que pida introducir la ruta de un directorio por teclado (Hay que validar que la variable introducida sea un directorio) nos diga cuantos archivos y cuantos directorios hay dentro de ese directorio (usando bucle for).
+24. Realizar un script en linux que pida introducir la ruta de un directorio por teclado
+(Hay que validar que la variable introducida sea un directorio) nos diga cuantos archivos y
+cuantos directorios hay dentro de ese directorio (usando bucle for).
 
 >pico ej24.sh
+	#!/bin/bash
+
+# Solicitar la ruta del directorio al usuario
+read -p "Ingrese la ruta del directorio: " directorio
+
+# Validar si la ruta ingresada es un directorio
+if [ ! -d "$directorio" ]; then
+	echo "La ruta no es un directorio válido."
+	exit 1
+fi
+
+# Contadores de archivos y directorios
+cantidad_archivos=0
+cantidad_directorios=0
+
+# Recorrer los elementos dentro del directorio
+for elemento in "$directorio"/*; do
+	if [ -f "$elemento" ]; then
+		cantidad_archivos=$((cantidad_archivos + 1))
+	elif [ -d "$elemento" ]; then
+		cantidad_directorios=$((cantidad_directorios + 1))
+	fi
+done
+
+# Mostrar los resultados
+echo "Cantidad de archivos en el directorio: $cantidad_archivos"
+echo "Cantidad de directorios en el directorio: $cantidad_directorios"
 
 >chmod u+x ej24.sh
 >./ej24.sh
 
 ---------------------------------------------------------------------------------------------------
 
-25. Realizar un script en linux que permita convertir de grados a radianes y viceversa. El programa pedirá por teclado el tipo de conversión y el valor, y devolverá el resultado por pantalla, además de guardar el resultado en un fichero llamado conversion.txt
+25. Realizar un script en linux que permita convertir de grados a radianes y viceversa.
+El programa pedirá por teclado el tipo de conversión y el valor, y devolverá el resultado por
+pantalla, además de guardar el resultado en un fichero llamado conversion.txt
 
 >pico ej25.sh
+	#!/bin/bash
+
+	read -p "1: rad -> º; 2: º -> rad: " opcion
+
+	if [ $opcion -eq 1 ]; then
+		read -p "¿Cuántos radianes son?: " radian
+		grados=$( echo "scale = 2; $radian * 57.2958" | bc -l)
+		echo "$radian radianes son $grados º"
+	elif [ $opcion -eq 2]; then
+		read -p "¿Cuántos grados son?: " grado
+		rads=$( echo "scale = 2; $grado * 0.0174533" | bc -l)
+		echo "$grado º son $rads radianes"
+	else 
+		echo "Opción no válida"
+	fi
 
 >chmod u+x ej25.sh
 >./ej25.sh
@@ -476,6 +571,7 @@ Si al script se le pasa un solo parámetro, lo usará como edad.
 Si al script se le pasan más de un parámetro mostrará un error.
 
 >pico ej26.sh
+	#!/bin/bash
 
 >chmod u+x ej26.sh
 >./ej26.sh
@@ -494,6 +590,7 @@ El script tendrá 2 parámetros:
 	SegundoParametro [push] que indicará si deseas hacer el push al repositorio remoto
 
 >pico ej27.sh
+	#!/bin/bash
 
 >chmod u+x ej27.sh
 >./ej27.sh
@@ -516,6 +613,7 @@ La opción 5 terminará el script.
 Cualquier otra opción mostrará un error
 
 >pico ej28.sh
+	#!/bin/bash
 
 >chmod u+x ej28.sh
 >./ej28.sh
@@ -535,6 +633,7 @@ Si el usuario pulsa la opción 4: Se borrará la pantalla y mostrará la fecha d
 NOTA: será obligatorio usar funciones para que el ejercicio esté correcto
 
 >pico ej29.sh
+	#!/bin/bash
 
 >chmod u+x ej29.sh
 >./ej29.sh
@@ -549,6 +648,7 @@ El fichero examen.txt si existe
   y no tiene permiso de ejecución
 
 >pico ej30.sh
+	#!/bin/bash
 
 >chmod u+x ej30.sh
 >./ej30.sh
@@ -571,6 +671,7 @@ $ ./eje4.sh -lg 25
 	35 galones son 132.48935 litros
 
 >pico ej31.sh
+	#!/bin/bash
 
 >chmod u+x ej31.sh
 >./ej31.sh
@@ -586,6 +687,7 @@ En caso de introducir un valor negativo de hijos o un número de hijos superior 
 Da permisos adecuados y ejecuta el programa (escribe los comandos necesarios)
 
 >pico ej32.sh
+	#!/bin/bash
 
 >chmod u+x ej32.sh
 >./ej32.sh
@@ -600,6 +702,7 @@ NOTA: Recuerda que para hacer cálculos con decimales tendrás que usar
 $( echo "scale=4; <operacion_a_calcular>" | bc -l ) 
 
 >pico ej33.sh
+	#!/bin/bash
 
 >chmod u+x ej33.sh
 >./ej33.sh
@@ -609,6 +712,7 @@ $( echo "scale=4; <operacion_a_calcular>" | bc -l )
 34. Programa que pida por pantalla 2 números y determine cual es el mayor.
 
 >pico ej34.sh
+	#!/bin/bash
 
 >chmod u+x ej34.sh
 >./ej34.sh
@@ -618,6 +722,7 @@ $( echo "scale=4; <operacion_a_calcular>" | bc -l )
 35. Programa al que se le pueda pasar como parámetros 2 números y determine cuál de ellos es el mayor.
 
 >pico ej35.sh
+	#!/bin/bash
 
 >chmod u+x ej35.sh
 >./ej35.sh
@@ -627,6 +732,7 @@ $( echo "scale=4; <operacion_a_calcular>" | bc -l )
 36. Programa al que se le puedan pasar como parámetro múltiples valores numéricos y determine cuál de ellos es el menor.
 
 >pico ej36.sh
+	#!/bin/bash
 
 >chmod u+x ej36.sh
 >./ej36.sh
@@ -643,6 +749,7 @@ la quinta opción nos dirá si el fichero info.txt existe
 Usa funciones para que el código sea más limpio.
 
 >pico ej037.sh
+	#!/bin/bash
 
 >chmod u+x ej37.sh
 >./ej37.sh
@@ -657,6 +764,7 @@ Si la contraseña no coincide con la contraseña inicial, presenta el siguiente 
 Repite los pasos 2 y 3 hasta que la contraseña coincida con la contraseña inicial
 
 >pico ej38.sh
+	#!/bin/bash
 
 >chmod u+x ej38.sh
 >./ej38.sh
@@ -670,6 +778,7 @@ PISTA: usa who y grep
 El sistema estará comprobando cada segundo si el usuario se conecta. En cuanto el usuario se conecte mostrará un mensaje por pantalla y el programa terminará.
 
 >pico ej39.sh
+	#!/bin/bash
 
 >chmod u+x ej39.sh
 >./ej39.sh
@@ -680,6 +789,7 @@ El sistema estará comprobando cada segundo si el usuario se conecta. En cuanto 
 El script continúa ejecutándose mientras que no se introduzca 0.
 
 >pico ej40.sh
+	#!/bin/bash
 
 >chmod u+x ej40.sh
 >./ej40.sh
@@ -689,6 +799,7 @@ El script continúa ejecutándose mientras que no se introduzca 0.
 41.  Mostrar por pantalla números del 1 al 20
 
 >pico ej41.sh
+	#!/bin/bash
 
 >chmod u+x ej41.sh
 >./ej41.sh
@@ -698,6 +809,7 @@ El script continúa ejecutándose mientras que no se introduzca 0.
 42. Pedir por pantalla un nombre de persona, si no es nulo mostrar el nombre insertado por teclado; en caso contrario, si este es nulo, mostrar el nombre del sistema whoami
 
 >pico ej42.sh
+	#!/bin/bash
 
 >chmod u+x ej42.sh
 >./ej42.sh
@@ -707,6 +819,7 @@ El script continúa ejecutándose mientras que no se introduzca 0.
 43. Chekear si un directorio existe
 
 >pico ej43.sh
+	#!/bin/bash
 
 >chmod u+x ej43.sh
 >./ej43.sh
@@ -716,6 +829,7 @@ El script continúa ejecutándose mientras que no se introduzca 0.
 44. Comparar 2 números. Indica si son iguales o distintos
 
 >pico ej44.sh
+	#!/bin/bash
 
 >chmod u+x ej44.sh
 >./ej44.sh
@@ -726,6 +840,7 @@ El script continúa ejecutándose mientras que no se introduzca 0.
 y mostrar una frase en función del lenguaje elegido
 
 >pico ej45.sh
+	#!/bin/bash
 
 >chmod u+x ej45.sh
 >./ej45.sh
