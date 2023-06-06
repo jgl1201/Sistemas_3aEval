@@ -1,0 +1,28 @@
+ /* Crear un endPoint que devuelva
+     * un personaje random de la serie 
+     * GET https://rickandmortyapi.com/api/character/??? */
+      @Autowired
+      RickAndMortyService rickAndMortyService;
+
+      @GetMapping("/rickandmorty/random")
+      public String randomCharacter() {
+       // RickAndMortyService rickAndMortyService = new RickAndMortyService();
+        CharacterModel characterModel = rickAndMortyService.getRandomCharacter();
+
+        return characterModel.name + "<br/>" + "<img width='200' src='" + characterModel.image + "'/>";
+      }
+
+---------------------------------------------------------------------------------------------------------------
+
+ @GetMapping("/rickandmorty/allCharacters")
+      public String allCharacters() {
+        CharactersModel charactersModel = rickAndMortyService.getAllCharacters();
+        String html = "";
+        for (CharacterModel cm : charactersModel.results) {
+            html += cm.name;
+            html += "<br/>";
+            html += "<img width='200px' src='" + cm.image + "'>";
+            html += "<hr>";
+        }
+        return html;
+      }

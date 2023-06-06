@@ -1,0 +1,150 @@
+//Crear un endPoint que devuelva el cuadrado de un numero pasado
+    @GetMapping("/square")
+    public String square(@RequestParam String number) {
+        try {
+            float result = (float)(Math.pow(Float.parseFloat(number), 2));
+            return "El cuadrado de " + number + " es: " + result;
+        } catch(NumberFormatException e) {
+            return "El numero no es valido";
+        }
+    }
+
+--------------------------------------------------------------------------------------------------
+
+/* Crear un endPoint que borre la info de datos.txt, no el fichero
+    Probar el funcionamiento mediante conexion Thunderclient */
+    @DeleteMapping("/deleteData")
+    public String deleteData() {
+        try {
+            Utils.deleteData("datos.txt");
+            return "Fichero limpiado correctamente";
+        } catch (IOException e) {
+            return "Error al limpiar el fichero: " + e.getMessage();
+        }
+    }
+
+public static void deleteData(String fileName) throws IOException{
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(fileName, false);
+        fw.write("");
+        } finally {
+            if (fw != null) fw.close();        
+        }
+    }
+
+--------------------------------------------------------------------------------------------------
+
+ /* Crear un endPoint que devuelva toda la informacion de datos.txt */
+    @GetMapping("products")
+    public static  String getProducts() {
+       try {
+        return Utils.readFromDiks("datos.txt");
+        } catch (FileNotFoundException e) {
+        return "Fichero no encontrado";
+        } catch (IOException e) {
+        return "Error en la lectura del fichero: " + e.getMessage();
+        }
+    }
+
+public static String readFromDiks(String fileName)
+                    throws IOException, FileNotFoundException {
+        FileReader fr = null;
+        BufferedReader br = null;
+        try {
+            fr = new FileReader("datos.txt");
+            br = new BufferedReader(fr);
+            String line, content = "<ul>";
+            while ((line = br.readLine()) != null) {
+                content += "<li>" + line + "<li/>";
+            }
+            content += "<ul/>";
+            return content;
+        } finally {
+            try {
+                if (fr != null) fr.close();
+                if (br != null) br.close();
+            } catch (IOException e) {
+                
+            }
+        }
+    }
+
+
+
+--------------------------------------------------------------------------------------------------
+
+/* Crear un endPoint que devuelva el mayor de 3 numeros pasados
+ * Si algunpo de los parametros pasados no es un numero, 
+ * retornar "ERROR" */
+ @GetMapping ("/highest")
+    public String highest(@RequestParam String nu1, @RequestParam String nu2,
+        @RequestParam String nu3) {
+        try {
+            float n1 = Float.parseFloat(nu1);
+            float n2 = Float.parseFloat(nu2);
+            float n3 = Float.parseFloat(nu3);
+            return "El mayor es " + Utils.maxOfElements(n1, n2, n3);
+        } catch (Exception e) {
+            return "ERROR";
+        }  
+    }
+
+    public static float maxOfElements(float ...numbers) throws Exception{
+        if (numbers == null || numbers.length == 0)
+            throw new NumberFormatException();
+        float max = numbers[0];
+        for (float n : numbers)
+            if (n > max) max = n;
+        return max;
+    }
+--------------------------------------------------------------------------------------------------
+
+     /* Crear un endPoint al que se le pase una frase.
+      * Devolver la misma frase, pero con la primera
+      letra de cada palabra en mayuscula */
+
+@GetMapping("/capitalize/{text}")
+    public String capitalize(@PathVariable String text) {
+        return Utils.capitalizeText(text);
+    }
+
+public static String capitalizeText(String text) {
+        String[] words = text.split(" ");
+        String capitalizedText = "";
+        for (String word : words) {
+            char letter = Character.toUpperCase(word.charAt(0));
+            String rest = word.substring(1).toLowerCase();
+            capitalizedText += letter + rest + " ";
+        }
+        return capitalizedText;
+    }
+
+--------------------------------------------------------------------------------------------------
+
+/* Crea un endPoint que devuelva 3 colores random sin
+       * repetir. Parte de un array de colores basicos
+       * [negro, azul, marron, gris, verde, naranja, rosa, purpura, rojo,
+       * blanco, amarillo] */
+
+      @GetMapping ("/randomColor")
+      public String randomColor() {
+        final int  COLOR_COUNT = 3;
+        final String[] COLORS = {"negro", "azul", "marron", "gris", "verde", "naranja",
+          "rosa", "purpura", "rojo", "blanco", "amarillo"};
+        if (COLOR_COUNT > COLORS.length) throw new RuntimeException("Limite sobrepasado");
+        
+        ArrayList<String> returnColors = new ArrayList<String>(Arrays.asList(COLORS));
+        String finalColors = "";
+        for (int i = 0; i < COLOR_COUNT; i++) {
+            int random = Utils.generateRandom(returnColors.size());
+            finalColors += returnColors.remove(random) + " ";
+        }
+
+        return finalColors;
+      }
+
+    public static int generateRandom(int max) {
+        return  (int) Math.floor((Math.random() * max));
+
+    }

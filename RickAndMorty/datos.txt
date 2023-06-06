@@ -1,0 +1,3 @@
+limones 2
+patatas 4
+fresas 3

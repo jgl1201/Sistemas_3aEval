@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        nav {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: black;
+        }
+
+        nav a:hover {
+            color: aquamarine;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/games">Listado de juegos</a>
+        <a href="/games/addForm">Añadir nuevo juego</a>
+    </nav>
+    <!-- <div th:replace="navMeme"></div> -->
+
+    <h1>Creación de un nuevo juego</h1>
+    <form class="form" action="/games" method="post">
+        <label for="description">Descripcion</label>
+        <input id="description" name="description" placeholder="Descripcion"></input>
+
+        <label for="url">Url</label>
+        <input id="url" name="url" placeholder="Url de la foto"></input>
+
+        <label for="companyName">Nombre de la compañía</label>
+        <input id="companyName" name="companyName" placeholder="Url de la portada"></input>
+
+        <label for="author">Autor</label>
+        <input id="author" name="author" placeholder="Autor"></input>
+
+        <label for="category">Categoría</label>
+        <select id="category" name="category">
+            <option value="+18">+18</option>
+            <option value="accion">Acción</option>
+            <option value="arcade">Arcade</option>
+            <option value="aventura">Aventura</option>
+            <option value="deportes">Deportes</option>
+            <option value="estrategia">Estrategia</option>
+            <option value="mesa">Juego de mesa</option>
+            <option value="rol">Rol</option>
+            <option value="otro">Otro</option>
+        </select>
+
+        <button type="submit">Crear</button>
+    </form>
+</body>
+
+</html>

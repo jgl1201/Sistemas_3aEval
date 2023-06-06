@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--     <meta http-equiv="refresh" content="10">
+ -->    <title>Document</title>
+    <style>
+        img {
+            width: 100px;
+        }
+        li{
+            list-style: none;
+        }
+        .container {
+            display:flex ;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header th:insert="~{navMeme}"></header>
+    <h1>Lista de memes</h1>
+    <section class="container">
+            <div th:each="meme: ${misMemes}">
+                <img th:src="${meme.url}" alt="meme"/>
+                <p th:text="${meme.description}"></p>
+                <p th:text="${meme.author}"></p>
+                <button th:onclick="deleteMeme( [[${meme.id}]] )">❌</button>
+            </div>
+    </section>
+    
+    <script>
+        async function deleteMeme(id) {
+            await fetch('/memes/' + id, {method: 'DELETE'})
+
+            console.log('Meme borrado')
+            window.location.replace('/memes')
+        }
+    </script>
+
+</body>
+</html>

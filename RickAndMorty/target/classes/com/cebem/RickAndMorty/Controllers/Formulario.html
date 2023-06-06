@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+        #delete {
+            background-color: greenyellow;
+        }
+    </style>
+</head>
+<body>
+    <form action="http://localhost:8080/saveOnDisk" method="post">
+        <label for="name">Nombre: </label>
+        <input type="text" name="name" id="name" placeholder="Nombre del producto">
+        <label for="price">Precio: </label>
+        <input type="text" name="price" id="price" placeholder="Precio del producto">
+        <button type="submit">Enviar al servidor</button>
+    </form>
+    <hr/>
+
+    <button id="delete">Eliminar fichero del servidor</button>
+    <script>
+        document.getElementById("delete").addEventListener("click", handleDelete)
+        function handleDelete() {
+            //alert("No me toques")
+            // callbacks, promesas, asinc/await
+            fetch("http://localhost:8080/deleteFromDisk", {method: "DELETE"})
+            .then(response => response.text())
+            .then(response => alert(response))
+        }
+
+    </script>
+
+</body>
+</html> 
