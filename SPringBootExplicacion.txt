@@ -1,0 +1,59 @@
+----- BBDD -----
+Crearla con Clever Cloud y poner las credenciales en
+	resources / application-properties
+Guarda MODELS, P.E. MemeModel
+
+
+----- MODELS -----
+Es una tabla que se almacena en la BBDD;
+1. Se nota como @Entity @Table.
+2. Se le da un (name = "NombreTabla").
+3. Se declaran los campos que se van a guardar, así como su tipo.
+	3.1. Si el campo es el ID, se nota como @Id.
+	3.2. Si es auto_incremental, se nota como
+	     @GeneratedValue(strategy = GenerationTyoe.IDENTITY).
+	3.3. Se nota como @Column(unique = true, nullable = false)
+	     para que no se repita ni esté vacío.
+	3.4. Para una columna tipo DATE, se nota con @Temporal(TemporalType.TIMESTAMP).
+	     Luego, se nota como @Column(columnDefinition = "dato_temporal_a_almacenar")
+
+
+----- REPOSITORIES -----
+SOLO SI SE CONECTA CON UNA BBDD
+Se nota como @Repository para que Spring Boot sepa que lo es.
+Extiende CrudRepository o JPARepository,
+     si las funciones del primero son insuficientes.
+Implementa el solo los métodos al extender esos repositorios.
+
+
+----- SERVICES -----
+Se nota como @Service
+Se instancia el REPOSITORY, preferiblemente con @Autowire
+     para la optimización de las dependencias. 
+*) Si se quiere conectar a un API, se instancia RestTemplate,
+     se almacena en un String a que parte del API se quiere acceder y se guardan los
+     datos en el MODEL con restTemplate.getForObject(url, Model.class);.
+Se escriben los métodos necesarios usando las funciones que implementa el Repositorio.
+P.E. el metodo getAllMemes() devuelve un ArrayList con todos los memes almacenados en la BBDD
+	usando findAll() del Repositorio.
+
+
+----- CONTROLLERS -----
+@Controller devuelve una plantilla html
+@RestController NO devuelve una plantilla
+	P.E. diferencia entre MemeController, que tiene métodos que devuelven plantillas html,
+	y MemeRestController, que tiene un método para eliminar un meme que no devuelve un html.
+Se instancia el SERVICE, con @Autowired
+Se creanendpoints: 
+	1. Indicar el método: 
+		Request --> Devolución de datos
+		Post 	--> Añadir datos
+		Delete	--> Borrar datos (necesita testeo thunderclient)
+		Put	--> Actualizar los datos completamente (Todos los campos)
+		Patch	--> Actualizar los datos parcialmente (Un campo del meme)
+	2. Entre parentesis y comillas, se pone la ruta del endpoint.
+	3. Para coger los valores inserados en el formulario:
+		Los métodos deben ser el mismo (POST - POST)
+		Necesita un @RequestParams Map<String, String> body
+		Hay que hacer un body.get(nombre_input(=nombre_for = name))
+	4. Se retorna la plantilla.
